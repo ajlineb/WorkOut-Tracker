@@ -22,33 +22,33 @@ db.on("error", (error) => {
 });
 //--------------------------------------------
 
-db.on("error", (error) => {
-  console.log(`Database error: ${error}`);
-});
+// db.on("error", (error) => {
+//   console.log(`Database error: ${error}`);
+// });
 
-app.get("/stats", (req, res) => {
-  db.places.find({}, (err, data) => {
-    if (err) {
-      console.log(err);
-    } else {
-      //console.log("here is the data");
-      //console.log("------------------------------------------------");
-      res.json(data);
-    }
-  });
-});
+// app.get("/stats", (req, res) => {
+//   db.places.find({}, (err, data) => {
+//     if (err) {
+//       console.log(err);
+//     } else {
+//       //console.log("here is the data");
+//       //console.log("------------------------------------------------");
+//       res.json(data);
+//     }
+//   });
+// });
 
-app.get("/exercise", (req, res) => {
-  db.places.find({}).sort({ country: 1 }, (err, data) => {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log("here is the data");
-      console.log("------------------------------------------------");
-      res.json(data);
-    }
-  });
-});
+// app.get("/exercise", (req, res) => {
+//   db.places.find({}).sort({ country: 1 }, (err, data) => {
+//     if (err) {
+//       console.log(err);
+//     } else {
+//       console.log("here is the data");
+//       console.log("------------------------------------------------");
+//       res.json(data);
+//     }
+//   });
+// });
 
 app.listen(PORT, () => {
   console.log(`App is listening on port: ${PORT}`);

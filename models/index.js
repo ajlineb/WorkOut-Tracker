@@ -2,5 +2,4 @@
 
 module.exports = {
   workout: require("./Workout"),
-  Library: require("./Library"),
 };
