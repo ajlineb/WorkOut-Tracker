@@ -22,40 +22,33 @@ db.on("error", (error) => {
 });
 //--------------------------------------------
 
-// const express = require("express");
-// const mongojs = require("mongojs");
+db.on("error", (error) => {
+  console.log(`Database error: ${error}`);
+});
 
-// const db = mongojs("lessondb", ["places"]);
-// const PORT = 3001;
-// const app = express();
+app.get("/stats", (req, res) => {
+  db.places.find({}, (err, data) => {
+    if (err) {
+      console.log(err);
+    } else {
+      //console.log("here is the data");
+      //console.log("------------------------------------------------");
+      res.json(data);
+    }
+  });
+});
 
-// db.on("error", (error) => {
-//   console.log(`Database error: ${error}`);
-// });
-
-// app.get("/unsorted", (req, res) => {
-//   db.places.find({}, (err, data) => {
-//     if (err) {
-//       console.log(err);
-//     } else {
-//       //console.log("here is the data");
-//       //console.log("------------------------------------------------");
-//       res.json(data);
-//     }
-//   });
-// });
-
-// app.get("/sorted", (req, res) => {
-//   db.places.find({}).sort({ country: 1 }, (err, data) => {
-//     if (err) {
-//       console.log(err);
-//     } else {
-//       //console.log("here is the data");
-//       //console.log("------------------------------------------------");
-//       res.json(data);
-//     }
-//   });
-// });
+app.get("/exercise", (req, res) => {
+  db.places.find({}).sort({ country: 1 }, (err, data) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("here is the data");
+      console.log("------------------------------------------------");
+      res.json(data);
+    }
+  });
+});
 
 app.listen(PORT, () => {
   console.log(`App is listening on port: ${PORT}`);
