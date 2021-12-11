@@ -1,6 +1,6 @@
 const express = require("express");
 const routes = require("./routes");
-const mongojs = require("mongojs");
+const mongoose = require("mongoose");
 
 const logger = require("morgan");
 const PORT = process.env.PORT || 3000;
@@ -11,48 +11,16 @@ app.use(logger("dev"));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(routes);
 
 app.use(express.static("public"));
+app.use(routes);
 
-const databaseUrl = "workoutTrackerDB";
-const collections = ["user"];
-
-const db = mongojs(databaseUrl, collections);
-db.on("error", (error) => {
-  console.log("Database Error:", error);
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+  useFindAndModify: false,
 });
-
-//routes
-//--------------------------------------------
-
-// db.on("error", (error) => {
-//   console.log(`Database error: ${error}`);
-// });
-
-// app.get("/stats", (req, res) => {
-//   db.workouts.find({}, (err, data) => {
-//     if (err) {
-//       console.log(err);
-//     } else {
-//       //console.log("here is the data");
-//       //console.log("------------------------------------------------");
-//       res.json(data);
-//     }
-//   });
-// });
-
-// app.get("/exercise", (req, res) => {
-//   db.workouts.find({}).sort({ country: 1 }, (err, data) => {
-//     if (err) {
-//       console.log(err);
-//     } else {
-//       console.log("here is the data");
-//       console.log("------------------------------------------------");
-//       res.json(data);
-//     }
-//   });
-// });
 
 app.listen(PORT, () => {
   console.log(`App is listening on port: ${PORT}`);
