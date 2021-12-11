@@ -1,8 +1,8 @@
 const router = require("express").Router();
 const { Workout } = require("../../models");
 
-router.post("/", async ({ body }, res) => {
-  Workout.create(body)
+router.get("/", (req, res) => {
+  Workout.find({})
     .then((dbWorkout) => {
       res.status(200).json(dbWorkout);
     })
@@ -11,7 +11,17 @@ router.post("/", async ({ body }, res) => {
     });
 });
 
-router.post("/bulk", async ({ body }, res) => {
+// router.post("/", async ({ body }, res) => {
+//   Workout.create(body)
+//     .then((dbWorkout) => {
+//       res.status(200).json(dbWorkout);
+//     })
+//     .catch((err) => {
+//       res.status(400).json(err);
+//     });
+// });
+
+router.post("/", async ({ body }, res) => {
   try {
     Workout.insertMany(body).then((dbWorkout) => {
       res.status(200).json(dbWorkout);
@@ -31,21 +41,14 @@ router.put("/:id", async ({ body }, res) => {
   }
 });
 
-router.get("/", (req, res) => {
-  Workout.find({})
-    .then((dbWorkout) => {
-      res.status(200).json(dbWorkout);
-    })
-    .catch((err) => {
-      res.status(400).json(err);
-    });
-});
-
 router.get("/range", (req, res) => {
-  Workout.find({})
+  Workout.find()
+    .sort({ _id: -1 })
+    .limit(7)
     .then((dbWorkout) => {
       console.log(dbWorkout);
-      res.status(200).json(dbWorkout);
+      const reversedbWorkout = dbWorkout.reverse();
+      res.status(200).json(reversedbWorkout);
     })
     .catch((err) => {
       res.status(400).json(err);
