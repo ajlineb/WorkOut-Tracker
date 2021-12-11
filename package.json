@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "chart.js": "^3.6.2",
     "express": "^4.17.1",
     "mongojs": "^3.1.0",
     "mongoose": "^5.3.16",

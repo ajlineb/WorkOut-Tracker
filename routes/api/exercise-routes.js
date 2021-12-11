@@ -41,4 +41,15 @@ router.get("/", (req, res) => {
     });
 });
 
+router.get("/range", (req, res) => {
+  Workout.find({})
+    .then((dbWorkout) => {
+      console.log(dbWorkout);
+      res.status(200).json(dbWorkout);
+    })
+    .catch((err) => {
+      res.status(400).json(err);
+    });
+});
+
 module.exports = router;
