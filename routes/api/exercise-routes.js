@@ -11,9 +11,9 @@ router.get("/", (req, res) => {
     },
   ])
     .then((workouts) => {
-      res.json(workouts);
+      res.status(200).json(workouts);
     })
-    .catch((err) => res.json(err));
+    .catch((err) => res.status(400).json(err));
 });
 
 //make a new workout
@@ -21,9 +21,10 @@ router.post("/", (req, res) => {
   Workout.create(req.body, (err, data) => {
     if (err) {
       console.log(err);
+      res.status(400).json(err);
     } else {
       console.log("CREATE DATA", data);
-      res.json(data);
+      res.status(200).json(data);
     }
   });
 });
@@ -37,8 +38,9 @@ router.put("/:id", (req, res) => {
     (err, data) => {
       if (err) {
         console.log(err);
+        res.status(400).json(err);
       } else {
-        res.json(data);
+        res.status(200).json(data);
       }
     }
   );
@@ -63,9 +65,10 @@ router.get("/range", (req, res) => {
     function (err, data) {
       if (err) {
         console.log(err);
+        res.status(400).json(err);
       } else {
         const reversedData = data.reverse(); //reversing so that data starts at the older day to the left of the chart and new to the right of the chart
-        res.json(reversedData);
+        res.status(200).json(reversedData);
       }
       // json(data) is an array of documents
     }
